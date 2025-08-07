@@ -27,12 +27,24 @@ const validationSchema = Yup.object({
   address: Yup.string().required('Requiredelo'),
 });
 
+const validateComments = (value) => {
+  let error;
+  if (!value) {
+    error = 'Required';
+  } else if (value.length < 5) {
+    error = 'Must be at least 5 characters';
+  }
+  return error;
+};
+
 function YoutubeForm() {
   return (
     <Formik
       initialValues={initialValues}
       onSubmit={onSubmit}
       validationSchema={validationSchema}
+      // validateOnBlur={false}
+      // validateOnChange={true}
     >
       <Form>
         <label htmlFor="name">Name</label>
@@ -55,7 +67,8 @@ function YoutubeForm() {
         <br />
 
         <label htmlFor="comments">Comments</label>
-        <Field as="textarea" type="text" id="comments" name="comments" />
+        <Field as="textarea" type="text" id="comments" name="comments" validate={validateComments} />
+        <ErrorMessage name="comments" component={TextError}/>
         <br />
 
         <label htmlFor="address">Address</label>
