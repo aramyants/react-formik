@@ -1,4 +1,11 @@
-import { ErrorMessage, Field, Form, Formik } from 'formik';
+import {
+  ErrorMessage,
+  FastField,
+  Field,
+  FieldArray,
+  Form,
+  Formik,
+} from 'formik';
 import * as Yup from 'yup';
 import TextError from './TextError';
 
@@ -12,6 +19,8 @@ const initialValues = {
     facebook: '',
     twitter: '',
   },
+  phoneNumbers: ['', ''],
+  phNumbers: [''],
 };
 
 const onSubmit = (values) => {
@@ -25,6 +34,16 @@ const validationSchema = Yup.object({
   address: Yup.string().required('Requiredelo'),
 });
 
+const validateComments = (value) => {
+  let error;
+  if (!value) {
+    error = 'Required';
+  } else if (value.length < 5) {
+    error = 'Must be at least 5 characters';
+  }
+  return error;
+};
+
 function YoutubeForm() {
   return (
     <Formik
@@ -32,8 +51,12 @@ function YoutubeForm() {
       onSubmit={onSubmit}
       validationSchema={validationSchema}
       // validateOnMount
+      // validateOnBlur={false}
+      // validateOnChange={true}
     >
       {(formik) => {
+        console.log('formik props', formik);
+
         return (
           <Form>
             <label htmlFor="name">Name</label>
@@ -54,12 +77,21 @@ function YoutubeForm() {
             <br />
 
             <label htmlFor="comments">Comments</label>
-            <Field as="textarea" type="text" id="comments" name="comments" />
+
+            <Field
+              as="textarea"
+              type="text"
+              id="comments"
+              name="comments"
+              validate={validateComments}
+            />
+            <ErrorMessage name="comments" component={TextError} />
             <br />
 
             <label htmlFor="address">Address</label>
-            <Field type="text" id="address" name="address">
+            <FastField type="text" id="address" name="address">
               {(props) => {
+                console.log('Field rendered');
                 const { field, form, meta } = props;
                 return (
                   <div>
@@ -70,7 +102,7 @@ function YoutubeForm() {
                   </div>
                 );
               }}
-            </Field>
+            </FastField>
             <br />
 
             <label htmlFor="facebook">Facebook profile</label>
@@ -80,7 +112,67 @@ function YoutubeForm() {
             <Field type="text" id="twitter" name="social.twitter" />
             <br />
 
-            <button type="submit" disabled={(!formik.dirty && !formik.isValid)}>Submit</button>
+            <label htmlFor="primaryPh">Primary phone number</label>
+            <Field type="text" id="primaryPh" name="phoneNuumbers[0]" />
+            <br />
+            <label htmlFor="secondaryPh">Secondary phone number</label>
+            <Field type="text" id="secondaryPh" name="phoneNuumbers[1]" />
+            <br />
+
+            <label>List of phone numbers</label>
+            <FieldArray name="phNumbers">
+              {({ push, remove, form }) => {
+                const { values } = form;
+                const { phNumbers } = values;
+                return (
+                  <div>
+                    {phNumbers.map((phNumber, index) => (
+                      <div key={index}>
+                        <Field name={`phNumbers[${index}]`} />
+                        {phNumbers.length > 1 && (
+                          <button type="button" onClick={() => remove(index)}>
+                            -
+                          </button>
+                        )}
+                        {phNumbers.length - 1 === index && (
+                          <button type="button" onClick={() => push('')}>
+                            +
+                          </button>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                );
+              }}
+            </FieldArray>
+
+            <button
+              type="button"
+              onClick={() => formik.validateField('comments')}
+            >
+              Validate Comments
+            </button>
+            <button type="button" onClick={() => formik.validateForm()}>
+              Validate All
+            </button>
+                        <button
+              type="button"
+              onClick={() => formik.setFieldTouched('comments')}
+            >
+              Visit Comments
+            </button>
+            <button type="button" onClick={() => formik.setTouched(
+              {
+                name: true,
+                email: true,
+                channel: true,
+                comments: true,
+                address: true,
+              }
+            )}>
+              Visit Fields
+            </button>
+            <button type="submit">Submit</button>
           </Form>
         );
       }}
