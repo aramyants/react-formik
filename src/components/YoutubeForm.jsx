@@ -26,6 +26,7 @@ const initialValues = {
 const onSubmit = (values, onSubmitProps) => {
   alert(JSON.stringify(values, null, 2));
   console.log('submite props', onSubmitProps)
+  onSubmitProps.setSubmitting(false);
 };
 
 const validationSchema = Yup.object({
