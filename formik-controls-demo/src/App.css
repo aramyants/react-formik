@@ -40,3 +40,21 @@
 .read-the-docs {
   color: #888;
 }
+
+.formik-form {
+  text-align: left;
+  display: flex;
+  gap: 15px;
+  flex-direction: column;
+}
+
+.form-control {
+  display: flex;
+  flex-direction: column;
+}
+
+.error {
+  color: red;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
