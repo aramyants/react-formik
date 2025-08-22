@@ -4,13 +4,14 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import FormikContainer from './components/FormikContainer'
 import LoginForm from './components/LoginForm'
+import RegistrationForm from './components/RegistrationForm'
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
-      <LoginForm />
+      <RegistrationForm />
     </>
   )
 }
