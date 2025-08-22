@@ -9,7 +9,6 @@ function Select(props) {
       <div className="form-control">
         <label htmlFor={name}>{label}</label>
         <Field as="select" id={name} name={name} {...rest}>
-          <option value="">Select an option</option>
           {options.map(option => (
             <option key={option.key} value={option.value}>
               {option.text}

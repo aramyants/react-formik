@@ -40,7 +40,7 @@ function RegistrationForm() {
         onSubmit={onSubmit}
       >
         {(formik) => (
-          <Form>
+          <Form className='formik-form'>
             <FormikControl
               control="input"
               type="email"
