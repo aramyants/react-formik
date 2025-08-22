@@ -1,5 +1,5 @@
 import { Form, Formik } from 'formik';
-import React from 'react';
+import { Button } from "@chakra-ui/react";
 import * as Yup from 'yup';
 import FormikControl from './FormikControl';
 
@@ -31,29 +31,29 @@ function LoginForm() {
         {(formik) => (
           <Form className="login-form">
             <FormikControl
-              control="input"
+              control="chakra-input"
               type="email"
               label="Email"
               name="email"
               placeholder="Enter your email"
             />
             <FormikControl
-              control="input"
+              control="chakra-input"
               type="password"
               label="Password"
               name="password"
               placeholder="Enter your password"
             />
-            <button
+            <Button
               type="submit"
               className="btn btn-primary"
               disabled={!formik.isValid}
             >
               Login
-            </button>
-            <button type="reset" className="btn btn-secondary">
+            </Button>
+            <Button type="reset" className="btn btn-secondary">
               Reset
-            </button>
+            </Button>
           </Form>
         )}
       </Formik>

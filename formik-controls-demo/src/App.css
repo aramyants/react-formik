@@ -1,4 +1,4 @@
-#root {
+/* #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
@@ -39,10 +39,10 @@
 
 .read-the-docs {
   color: #888;
-}
-
+} */
+/*
 .formik-form {
-  text-align: left;
+   text-align: left;
   display: flex;
   gap: 15px;
   flex-direction: column;
@@ -57,4 +57,4 @@
   color: red;
   font-size: 0.875rem;
   margin-top: 0.25rem;
-}
+} */
